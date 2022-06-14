@@ -12,6 +12,7 @@ describe('providers initialization', () => {
   const pocketProvider = {};
   const defaultProvider = {};
   const fallbackProvider = {}
+  const jsonRPCProvider = {}
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -26,6 +27,7 @@ describe('providers initialization', () => {
     ethers.providers.CloudflareProvider = jest.fn().mockImplementation(() => cloudflareProvider);
     ethers.providers.FallbackProvider = jest.fn().mockImplementation(() => fallbackProvider);
     ethers.providers.getDefaultProvider = jest.fn().mockImplementation(() => defaultProvider);
+    ethers.providers.JsonRpcProvider = jest.fn().mockImplementation(() => jsonRPCProvider);
     expect(ethers.providers.InfuraProvider).not.toHaveBeenCalled();
   });
 
@@ -93,6 +95,24 @@ describe('providers initialization', () => {
       const provider = getProvider({ ...env, ETHEREUM_NETWORK: 'ropsten' });
       expect(provider).toBe(cloudflareProvider);
       expect(ethers.providers.CloudflareProvider).toHaveBeenCalledWith('ropsten');
+    });
+  });
+
+  describe('when enabling JSON_RPC_PROVIDER', () => {
+    const env = {
+      JSON_RPC_URL: 'https://rpc.ankr.com/gnosis'
+    };
+
+    it('should use the provider', () => {
+      const provider = getProvider(env);
+      expect(provider).toBe(jsonRPCProvider);
+      expect(ethers.providers.JsonRpcProvider).toHaveBeenCalledWith(env.JSON_RPC_URL, 'mainnet');
+    });
+
+    it('should use the defined network when set', () => {
+      const provider = getProvider({ ...env, ETHEREUM_NETWORK: 'ropsten' });
+      expect(provider).toBe(jsonRPCProvider);
+      expect(ethers.providers.JsonRpcProvider).toHaveBeenCalledWith(env.JSON_RPC_URL, 'ropsten');
     });
   });
 

@@ -55,6 +55,11 @@ module.exports.getProvider = (env) => {
     providers.push(new ethers.providers.AnkrProvider(network, env.ANKR_API_KEY));
   }
 
+
+  if (env.JSON_RPC_URL) {
+    providers.push(new ethers.providers.JsonRpcProvider(env.JSON_RPC_URL, network));
+  }
+
   if (providers.length === 1) {
     return providers[0];
   } else if (providers.length === 0) {
