@@ -35,6 +35,7 @@ const provider = getProvider();
 - `POCKET_APPLICATION_ID`: The application id for the pocket provider.
 - `POCKET_APPLICATION_SECRET_KEY`: The application secret for the pocket provider.
 - `ANKR_API_KEY`: The api key for alchemy provider.
+- `JSON_RPC_URL`: The api key for alchemy provider.
 
 ## License
 
