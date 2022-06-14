@@ -13,7 +13,11 @@ module.exports.getProvider = (env) => {
   if (typeof env === 'undefined') { env = process.env; }
 
   console.dir(env);
-  const network = env.ETHEREUM_NETWORK || 'mainnet';
+  let network = env.ETHEREUM_NETWORK || 'mainnet';
+  if (!isNaN(network)) {
+    //its a chain id
+    network = parseInt(network);
+  }
   const providers = [];
 
   if (env.ETHERSCAN_API_KEY) {

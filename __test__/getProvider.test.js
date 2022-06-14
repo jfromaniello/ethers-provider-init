@@ -114,6 +114,12 @@ describe('providers initialization', () => {
       expect(provider).toBe(jsonRPCProvider);
       expect(ethers.providers.JsonRpcProvider).toHaveBeenCalledWith(env.JSON_RPC_URL, 'ropsten');
     });
+
+    it('should use the chainid when set', () => {
+      const provider = getProvider({ ...env, ETHEREUM_NETWORK: '100' });
+      expect(provider).toBe(jsonRPCProvider);
+      expect(ethers.providers.JsonRpcProvider).toHaveBeenCalledWith(env.JSON_RPC_URL, 100);
+    });
   });
 
   describe('when enabling etherscan', () => {
