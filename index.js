@@ -12,7 +12,6 @@ const parseConfigInt = (str, def) => {
 module.exports.getProvider = (env) => {
   if (typeof env === 'undefined') { env = process.env; }
 
-  console.dir(env);
   let network = env.ETHEREUM_NETWORK || 'mainnet';
   if (!isNaN(network)) {
     //its a chain id
