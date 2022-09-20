@@ -70,8 +70,8 @@ module.exports.getProvider = (env) => {
   } else {
     const quorum = parseConfigInt(env.FALLBACK_QUORUM);
     if (typeof quorum === 'number') {
-      return ethers.providers.FallbackProvider(providers, quorum);
+      return new ethers.providers.FallbackProvider(providers, quorum);
     }
-    return ethers.providers.FallbackProvider(providers);
+    return new ethers.providers.FallbackProvider(providers);
   }
 };
