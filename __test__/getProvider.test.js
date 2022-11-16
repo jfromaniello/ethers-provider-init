@@ -80,6 +80,24 @@ describe('providers initialization', () => {
     });
   });
 
+  describe('when setting infura api key', () => {
+    const env = {
+      INFURA_API_KEY: 'API-KEY-KEY-23456',
+    };
+
+    it('should not use the default provider', () => {
+      getProvider(env);
+      expect(ethers.providers.getDefaultProvider)
+        .not.toHaveBeenCalled();
+    });
+
+    it('should use the InfuraProvider', () => {
+      const provider = getProvider(env);
+      expect(provider).toBe(infuraProvider);
+      expect(ethers.providers.InfuraProvider).toHaveBeenCalledWith('mainnet', env.INFURA_API_KEY);
+    });
+  });
+
   describe('when enabling cloudflare', () => {
     const env = {
       CLOUDFLARE_ENABLED: '1'
